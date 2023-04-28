@@ -1,41 +1,61 @@
-import React, { useState } from 'react'
+import React, { useReducer, useState } from 'react'
 import { Heading } from '../components/Heading';
 import { Input } from '../components/Input';
+import { apiGet } from '../misc/config';
+
+const intialData = {
+    title: '',
+    author: '',
+    body: ''
+};
+
+const initialResult = {
+    result: null,
+    isLoading: false,
+    error: null
+};
+
+const reducer = (previousState, action) => {
+
+    switch (action.type) {
+
+        case 'FETCH_INITIATED':
+            return ({ ...previousState, isLoading: action.isLoading });
+        case 'FETCH_SUCCES':
+            return ({ result: action.result, isLoading: false, error: null });
+        case 'FETCH_ERROR':
+            return ({ ...previousState, isLoading: false, error: action.error });
+        default:
+            return previousState;
+    }
+};
 
 export const Home = () => {
-    const [title, setTitle] = useState('');
-    const [author, setAuthor] = useState('');
-    const [body, setBody] = useState('');
-
-    const onTitleChange = (ev) => {
-        setTitle(ev.target.value);
-    }
-    const onBodyChange = (ev) => {
-        setBody(ev.target.value);
-    }
-    const onAuthorChange = (ev) => {
-        setAuthor(ev.target.value);
-    }
+    const [data, setData] = useState(intialData);
+    const [{ result, isLoading, error }, dispatch] = useReducer(reducer, initialResult)
 
     const onSearch = () => {
 
-        console.log(title);
-        console.log(author);
-        console.log(body);
+        dispatch({ type: 'FETCH_INITIATED', isLoading: true });
+        apiGet(data)
+            .then((response) => {
+                dispatch({ type: 'FETCH_SUCCES', result: response });
+            })
+            .catch((err) => {
+                dispatch({ type: 'FETCH_ERROR', error: err.message });
+            })
     };
 
     return (
         <div>
             <Heading />
             <Input
-                title={title}
-                author={author}
-                body={body}
                 onSearch={onSearch}
-                onTitleChange={onTitleChange}
-                onAuthorChange={onAuthorChange}
-                onBodyChange={onBodyChange}
+                setData={setData}
             />
+            {isLoading && <h1>Data is loading</h1>}
+            {error && <h1>{error}</h1>}
+            {result && <h1>Result</h1>}
         </div>
     );
 }
