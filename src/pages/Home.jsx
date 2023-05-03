@@ -20,7 +20,7 @@ const reducer = (previousState, action) => {
     switch (action.type) {
 
         case 'FETCH_INITIATED':
-            return ({ ...previousState, isLoading: action.isLoading });
+            return ({ ...previousState, isLoading: action.isLoading, result: action.result });
         case 'FETCH_SUCCES':
             return ({ result: action.result, isLoading: false, error: null });
         case 'FETCH_ERROR':
@@ -36,7 +36,7 @@ export const Home = () => {
 
     const onSearch = () => {
 
-        dispatch({ type: 'FETCH_INITIATED', isLoading: true });
+        dispatch({ type: 'FETCH_INITIATED', isLoading: true, result: initialResult });
         apiGet(data)
             .then((response) => {
                 dispatch({ type: 'FETCH_SUCCES', result: response });
@@ -57,7 +57,8 @@ export const Home = () => {
             />
             {isLoading && <h1>Data is loading</h1>}
             {error && <h1>{error}</h1>}
-            {result && <h1>Result</h1>}
+            {result && result.isReal === true && <h1>Geniune News</h1>}
+            {result && result.isReal === false && <h1>Fake News</h1>}
         </div>
     );
 }
