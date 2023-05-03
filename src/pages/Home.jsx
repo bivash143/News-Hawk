@@ -43,7 +43,9 @@ export const Home = () => {
             })
             .catch((err) => {
                 dispatch({ type: 'FETCH_ERROR', error: err.message });
-            })
+            });
+        // eslint-disable-next-line no-console
+        console.log(result)
     };
 
     return (

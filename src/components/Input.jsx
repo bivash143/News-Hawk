@@ -9,9 +9,11 @@ export const Input = ({ onSearch, setData }) => {
     const onTitleChange = (ev) => {
         setTitle(ev.target.value);
     }
+
     const onBodyChange = (ev) => {
         setBody(ev.target.value);
     }
+
     const onAuthorChange = (ev) => {
         setAuthor(ev.target.value);
     }
@@ -19,11 +21,11 @@ export const Input = ({ onSearch, setData }) => {
     useEffect(() => {
 
         setData({
-            'title': title,
-            'author': author,
-            'body': body
+            title,
+            body,
+            author
         });
-    }, [title, author, body, setData])
+    }, [title, author, body, setData]);
 
     return (
         <div>
@@ -40,7 +42,6 @@ export const Input = ({ onSearch, setData }) => {
                 <input id="search-body" type="text" onChange={onBodyChange} value={body} />
             </label>
             <button type="button" onClick={onSearch} >Search</button>
-
         </div>
     );
 }
