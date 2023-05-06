@@ -1,0 +1,35 @@
+label {
+  display: inline-block;
+  float: center;
+  clear: left;
+  width: 250px;
+  text-align: right;
+  padding: 5px;
+}
+input {
+  display: inline-block;
+}
+textarea {
+  display: inline-block;
+}
+button {
+  border-color: #4caf50; /* Green */
+  border: 7px;
+  border-radius: 6px;
+  color: black;
+  padding: 13px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+}
+
+button:hover {
+  background-color: #4caf50;
+  color: white;
+}
+
+label {
+  color: azure;
+  font-weight: 200;
+}

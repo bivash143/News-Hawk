@@ -1,1 +1,15 @@
-{}
+{
+  "manifest_version": 3,
+  "name": "News Hawk",
+  "version": "1.0.0",
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "hawk3.png"
+  },
+  "icons": {
+    "16": "hawk3.png",
+    "48": "hawk3.png",
+    "128": "hawk3.png"
+  },
+  "permissions": ["tabs"]
+}
